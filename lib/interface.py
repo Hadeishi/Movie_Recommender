@@ -114,7 +114,7 @@ def filter_movies_for_tweens(parent_ratings, rec_movie_names, df):
     will filter the movie list according to family standards described by parents and
     generate the top 5 movies that meet parent expectations.
     '''
-    _, prate_consumerism, prate_drinking_drugs_smoking, prate_language, prate_positive_messages, prate_sex, prate_violence, prate_genre, prate_MPAA_rating = parent_ratings
+    _, prate_positive_messages, prate_sex, prate_violence, prate_language, prate_drinking_drugs_smoking, prate_consumerism, prate_genre, prate_MPAA_rating = parent_ratings
 
     movie_nums = get_index_nums(rec_movie_names)
     if len(movie_nums) == 0:
@@ -122,7 +122,7 @@ def filter_movies_for_tweens(parent_ratings, rec_movie_names, df):
         return(6357)
     num_recs_filtered = []
     for num in movie_nums:
-        if df.loc[num, 'Consumerism'] <= int(prate_consumerism) and df.loc[num, 'Drinking, Drugs & Smoking'] <= int(prate_drinking_drugs_smoking) and df.loc[num, 'Language'] <= int(prate_language) and df.loc[num, 'Positive Messages'] >= int(prate_positive_messages) and df.loc[num, 'Sex'] >= int(prate_sex) and df.loc[num, 'Violence'] >= int(prate_violence) and df.loc[num, 'genre'] == prate_genre and df.loc[num, 'MPAA_ordinal'] <= prate_MPAA_rating:
+        if df.loc[num, 'Positive Messages'] >= int(prate_positive_messages) and df.loc[num, 'Sex'] >= int(prate_sex) and df.loc[num, 'Violence'] >= int(prate_violence) and df.loc[num, 'Language'] <= int(prate_language) and df.loc[num, 'Drinking, Drugs & Smoking'] <= int(prate_drinking_drugs_smoking) and df.loc[num, 'Consumerism'] <= int(prate_consumerism) and df.loc[num, 'genre'] == prate_genre and df.loc[num, 'MPAA_ordinal'] <= prate_MPAA_rating:
             num_recs_filtered.append(num)
         if len(num_recs_filtered) == 5:
             break
@@ -168,8 +168,8 @@ def get_parent_ratings_first():
         parent_ratings = youngsters, wants_educational, prate_sexy_stuff, prate_violence_scariness, prate_consumerism, prate_drinking_drugs_smoking, prate_language, prate_positive_messages, prate_genre, prate_MPAA_rating
 
     else:
-        prate_consumerism, prate_drinking_drugs_smoking, prate_language, prate_positive_messages, prate_sex, prate_violence, prate_genre, prate_MPAA_rating = get_parent_ratings_tweens()
-        parent_ratings = youngsters, prate_consumerism, prate_drinking_drugs_smoking, prate_language, prate_positive_messages, prate_sex, prate_violence, prate_genre, prate_MPAA_rating
+        prate_positive_messages, prate_sex, prate_violence, prate_consumerism, prate_drinking_drugs_smoking, prate_language, prate_genre, prate_MPAA_rating = get_parent_ratings_tweens()
+        parent_ratings = youngsters, prate_positive_messages, prate_sex, prate_violence, prate_consumerism, prate_drinking_drugs_smoking, prate_language, prate_genre, prate_MPAA_rating
     movie_all_recs = find_all_similar_movies()
     movie_names = movie_all_recs.index
     if youngsters == 1:
@@ -196,17 +196,17 @@ def get_parent_ratings_youngsters():
 
 def get_parent_ratings_tweens():
     print("I have just 8 more questions for you. Respond with a ? if you'd like some examples.")
-    prate_consumerism = get_prate_consumerism()
-    prate_drinking_drugs_smoking = get_prate_drinking_drugs_smoking()
-    prate_language = get_prate_language()
     prate_positive_messages = get_prate_positive_messages()
     prate_sex = get_prate_sex()
     prate_violence = get_prate_violence()
+    prate_consumerism = get_prate_consumerism()
+    prate_drinking_drugs_smoking = get_prate_drinking_drugs_smoking()
+    prate_language = get_prate_language()
     prate_genre = get_prate_genre()
     prate_MPAA_rating = get_prate_MPAA_rating()
     print("Thank you!")
 
-    return prate_consumerism, prate_drinking_drugs_smoking, prate_language, prate_positive_messages, prate_sex, prate_violence, prate_genre, prate_MPAA_rating
+    return prate_positive_messages, prate_sex, prate_violence, prate_consumerism, prate_drinking_drugs_smoking, prate_language, prate_genre, prate_MPAA_rating
 
 def get_num_children_and_ages():
     num_children = input("How many children do you have?")
