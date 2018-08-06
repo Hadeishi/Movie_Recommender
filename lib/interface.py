@@ -14,9 +14,9 @@ with open('data/movies_features_text.json') as json_file:
 # Load csv of movies_processed_nontext_features.csv
 df = pd.read_csv('data/movies_processed_nontext_features.csv')
 
-#Load pkl of similarity_matrix_tfidfvec_truncSVD1000.pkl
-with open('data/similarity_matrix_tfidfvec_truncSVD1000.pkl', 'rb') as f:
-    similarity_matrix_tfidfvec_truncSVD1000 = pickle.load(f)
+#Load pkl of similarity_matrix_tfidfvec_truncSVD4000.pkl
+with open('data/similarity_matrix_tfidfvec_truncSVD4000.pkl', 'rb') as f:
+    similarity_matrix_tfidfvec_truncSVD4000 = pickle.load(f)
 
 def title_recommender(movie_name, movie_list, limit=3):
     results = process.extract(movie_name, movie_list, limit=limit)
@@ -26,7 +26,7 @@ def find_similar_movies():
     movie_name = input("Give me a movie title and I'll give you five titles you might also like:")
     for title in df['title']:
         if title == movie_name:
-            sim_movies_text = similarity_matrix_tfidfvec_truncSVD1000[movie_name]
+            sim_movies_text = similarity_matrix_tfidfvec_truncSVD4000[movie_name]
             print("Thanks! Here are my recommendations, along with review text similarity scores:")
             recommendations = pd.DataFrame(sim_movies_text.sort_values(ascending=False)[1:6])
             return recommendations
@@ -37,7 +37,7 @@ def find_similar_movies():
         movie_name = input("(I need the exact title, please...)")
         for title in df['title']:
             if title == movie_name:
-                sim_movies_text = similarity_matrix_tfidfvec_truncSVD1000[movie_name]
+                sim_movies_text = similarity_matrix_tfidfvec_truncSVD4000[movie_name]
                 print("Thanks! Here are my recommendations, along with review text similarity scores:")
                 recommendations = pd.DataFrame(sim_movies_text.sort_values(ascending=False)[1:6])
                 return recommendations
@@ -50,7 +50,7 @@ def find_all_similar_movies():
     movie_name = input("Give me a movie title and I'll give you five titles you might also like:")
     for title in df['title']:
         if title == movie_name:
-            sim_movies_text = similarity_matrix_tfidfvec_truncSVD1000[movie_name]
+            sim_movies_text = similarity_matrix_tfidfvec_truncSVD4000[movie_name]
             print("Thanks! Here are my recommendations, along with review text similarity scores:")
             recommendations = pd.DataFrame(sim_movies_text.sort_values(ascending=False)[1:8000])
             return recommendations
@@ -61,7 +61,7 @@ def find_all_similar_movies():
         movie_name = input("(I need the exact title, please...)")
         for title in df['title']:
             if title == movie_name:
-                sim_movies_text = similarity_matrix_tfidfvec_truncSVD1000[movie_name]
+                sim_movies_text = similarity_matrix_tfidfvec_truncSVD4000[movie_name]
                 print("Thanks! Here are my movie recommendations:")
                 recommendations = pd.DataFrame(sim_movies_text.sort_values(ascending=False)[1:8000])
                 return recommendations
